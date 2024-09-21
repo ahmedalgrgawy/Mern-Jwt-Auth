@@ -1,6 +1,7 @@
 import bcryptjs from "bcryptjs";
 import { User } from "../models/user.model.js";
 import { generateTokenSetCookie } from "../utils/generateTokenSetCookie.js";
+import { sendVerificationEmail } from "../emails/emails.js";
 
 export const signup = async (req, res) => {
 
@@ -34,6 +35,9 @@ export const signup = async (req, res) => {
 
         // jwt 
         generateTokenSetCookie(res, user._id)
+
+        // send mail
+        await sendVerificationEmail(user.email, verificationToken)
 
         res.status(201).json({
             success: true, message: "User Created Successfully", user: {
