@@ -211,6 +211,26 @@ export const resetPassword = async (req, res) => {
 
 }
 
+export const checkAuth = async (req, res) => {
+
+    try {
+        const user = await User.findById(req.userId).select("-password");
+
+        if (!user) {
+            res.status(400).json({ success: false, message: 'User does not exist' })
+        }
+
+        res.status(200).json({ success: true, user })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        })
+    }
+}
+
 export const logout = async (req, res) => {
     res.clearCookie("token")
     res.status(200).json({
