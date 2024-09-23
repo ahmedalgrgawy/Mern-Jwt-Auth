@@ -96,6 +96,46 @@ export const login = async (req, res) => {
 
     const { email, password } = req.body;
 
+    try {
+
+        if (!email || !password) {
+            res.status(400).json({ success: false, message: 'Data is Missing' })
+        }
+
+        const user = await User.findOne({ email })
+
+        if (!user) {
+            res.status(400).json({ success: false, message: 'User does not exist' })
+        }
+
+        const isPassValid = await bcryptjs.compare(password, user.password)
+
+        if (!isPassValid) {
+            res.status(400).json({ success: false, message: 'Invalid Credentials' })
+        }
+
+        generateTokenSetCookie(res, user._id);
+
+        user.lastLogin = new Date();
+
+        await user.save()
+
+        res.status(200).json({
+            success: true,
+            message: "Logged in Successfully",
+            user: {
+                ...user._doc,
+                password: undefined
+            }
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        })
+    }
+
 }
 
 export const logout = async (req, res) => {
