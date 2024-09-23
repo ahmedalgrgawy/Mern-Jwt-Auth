@@ -3,12 +3,16 @@ import { mailtrapClient, sender } from "./mailtrap.config.js"
 
 
 export const sendVerificationEmail = async (email, verificationToken) => {
-    const recipient = [{ email: email }]
+    const recipients = [
+        {
+            email: "ahmedalgrgawy10@gmail.com",
+        }
+    ];
 
     try {
         const res = await mailtrapClient.send({
             from: sender,
-            to: recipient,
+            to: recipients,
             subject: "Verify Your Email",
             html: VERIFICATION_EMAIL_TEMPLATE.replace("{verificationCode}", verificationToken),
             category: "Email Verification"
