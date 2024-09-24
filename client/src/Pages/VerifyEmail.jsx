@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "../store/auth";
+import toast from "react-hot-toast";
 
 const VerifyEmail = () => {
 
     const [code, setCode] = useState(["", "", "", "", "", ""]);
     const inputRefs = useRef([]);
-    const isLoading = false;
+
+    const { error, isLoading, verifyEmail } = useAuth();
+
     const navigate = useNavigate();
 
     const handleChange = (index, value) => {
@@ -40,11 +44,21 @@ const VerifyEmail = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+
         const verificationCode = code.join("");
 
-        // api call 
+        try {
+            await verifyEmail(verificationCode)
+
+            navigate("/")
+
+            toast.success("Email Verified Successfully")
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
@@ -83,7 +97,7 @@ const VerifyEmail = () => {
                             />
                         ))}
                     </div>
-                    {/* {error && <p className='text-red-500 font-semibold mt-2'>{error}</p>} */}
+                    {error && <p className='text-red-500 font-semibold mt-2'>{error}</p>}
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
