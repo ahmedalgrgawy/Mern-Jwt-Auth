@@ -2,7 +2,7 @@ import { motion } from "framer-motion"
 import Input from "../Components/Input";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Lock, Mail } from "lucide-react";
+import { Lock, Mail, Loader } from "lucide-react";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -30,6 +30,12 @@ const Login = () => {
                         placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
                     />
 
+                    <div className='flex items-center mb-6'>
+                        <Link to='/forgot-password' className='text-sm text-green-400 hover:underline'>
+                            Forgot password?
+                        </Link>
+                    </div>
+
                     <motion.button
                         className='mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white 
 						font-bold rounded-lg shadow-lg hover:from-green-600
@@ -40,7 +46,7 @@ const Login = () => {
                         type='submit'
                     // disabled={isLoading}
                     >
-                        {/* {isLoading ? <Loader className=' animate-spin mx-auto' size={24} /> : "Sign Up"} */}
+                        {/* {isLoading ? <Loader className=' animate-spin mx-auto' size={24} /> : "Login"} */}
                         Login
                     </motion.button>
 
