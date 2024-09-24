@@ -7,6 +7,7 @@ import { Lock, Mail, Loader } from "lucide-react";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const isLoading = false;
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
@@ -44,10 +45,9 @@ const Login = () => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         type='submit'
-                    // disabled={isLoading}
+                        disabled={isLoading}
                     >
-                        {/* {isLoading ? <Loader className=' animate-spin mx-auto' size={24} /> : "Login"} */}
-                        Login
+                        {isLoading ? <Loader className=' animate-spin mx-auto' size={24} /> : "Login"}
                     </motion.button>
 
                 </form>

@@ -10,6 +10,7 @@ const Signup = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const isLoading = false;
     const navigate = useNavigate();
 
     const handleSignUp = (e) => {
@@ -48,10 +49,9 @@ const Signup = () => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         type='submit'
-                    // disabled={isLoading}
+                        disabled={isLoading}
                     >
-                        {/* {isLoading ? <Loader className=' animate-spin mx-auto' size={24} /> : "Sign Up"} */}
-                        SignUp
+                        {isLoading ? <Loader className=' animate-spin mx-auto' size={24} /> : "Sign Up"}
                     </motion.button>
 
                 </form>
