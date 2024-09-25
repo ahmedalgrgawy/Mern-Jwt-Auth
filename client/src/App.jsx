@@ -64,7 +64,7 @@ function App() {
           </RedirectAuthenticated>
         } />
 
-        <Route path='*' element={<Navigate to='/' replace />} />
+        <Route path='*' element={<Navigate to='/' replace />} />git rm --cached.env
 
       </Routes>
 
