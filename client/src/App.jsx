@@ -64,6 +64,8 @@ function App() {
           </RedirectAuthenticated>
         } />
 
+        <Route path='*' element={<Navigate to='/' replace />} />
+
       </Routes>
 
       <Toaster />

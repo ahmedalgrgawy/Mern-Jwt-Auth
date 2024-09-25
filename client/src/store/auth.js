@@ -52,9 +52,6 @@ export const useAuth = create((set) => ({
                 email, password
             })
 
-            console.log(response);
-
-
             set({ user: response.data.user, isAuthenticated: true, isLoading: false, error: null })
 
         } catch (error) {
@@ -75,7 +72,7 @@ export const useAuth = create((set) => ({
             return response.data;
 
         } catch (error) {
-            set({ error: null, isCheckingAuth: false })
+            set({ error: error, isCheckingAuth: false })
         }
     },
 
@@ -115,7 +112,7 @@ export const useAuth = create((set) => ({
         try {
             const response = await axiosInstance.post("/logout")
 
-            set({ user: null, isAuthenticated: false, isLoading: false, error: null })
+            set({ user: null, isAuthenticated: false, isLoading: false, error: null, message: response.data.message })
 
         } catch (error) {
             set({ error: error.response.data.message || "Error In Logout", isLoading: false })
