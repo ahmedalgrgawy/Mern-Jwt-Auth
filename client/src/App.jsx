@@ -13,7 +13,7 @@ import { LoadingSpinner } from "./Components/LoadingSpinner"
 
 function App() {
 
-  const { isCheckingAuth, checkAuth, isAuthenticated } = useAuth();
+  const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuth();
 
   useEffect(() => {
     checkAuth()

@@ -61,10 +61,6 @@ export const useAuth = create((set) => ({
 
     checkAuth: async () => {
 
-        await new Promise((resolve) => {
-            setTimeout(resolve, 2000)
-        })
-
         set({ isCheckingAuth: true, error: null })
 
         try {
@@ -85,10 +81,10 @@ export const useAuth = create((set) => ({
         try {
             const response = await axiosInstance.post("/logout")
 
-            set({ isAuthenticated: false, isLoading: false, error: null })
+            set({ user: null, isAuthenticated: false, isLoading: false, error: null })
 
         } catch (error) {
-            set({ error: error.response.data.message || "Error In Logout" })
+            set({ error: error.response.data.message || "Error In Logout", isLoading: false })
             throw error;
         }
     }
