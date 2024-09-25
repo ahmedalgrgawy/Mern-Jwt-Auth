@@ -7,6 +7,7 @@ export const useAuth = create((set) => ({
     error: null,
     isLoading: false,
     isCheckingAuth: true,
+    message: null,
 
     signup: async (email, password, name) => {
         set({ isLoading: true, error: null })
@@ -51,6 +52,9 @@ export const useAuth = create((set) => ({
                 email, password
             })
 
+            console.log(response);
+
+
             set({ user: response.data.user, isAuthenticated: true, isLoading: false, error: null })
 
         } catch (error) {
@@ -72,9 +76,39 @@ export const useAuth = create((set) => ({
 
         } catch (error) {
             set({ error: null, isCheckingAuth: false })
+        }
+    },
+
+    forgotPassword: async (email) => {
+        set({ isLoading: true, error: null })
+
+        try {
+
+            const response = await axiosInstance.post("/forgot-password", { email })
+
+            set({ message: response.data.message, isLoading: false, error: null })
+
+        } catch (error) {
+            set({ error: error.response.data.message || "Error In Forgot Password", isLoading: false })
             throw error;
         }
     },
+
+    resetPassword: async (token, password) => {
+        set({ isLoading: true, error: null, message: null })
+
+        try {
+
+            const response = await axiosInstance.post(`/reset-password/${token}`, { password })
+
+            set({ message: response.data.message, isLoading: false, error: null })
+
+        } catch (error) {
+            set({ error: error.response.data.message || "Error In Forgot Password", isLoading: false })
+            throw error;
+        }
+    },
+
     logout: async () => {
         set({ isLoading: true, error: null })
 

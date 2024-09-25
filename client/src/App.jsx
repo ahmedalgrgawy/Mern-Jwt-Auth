@@ -10,10 +10,12 @@ import { RedirectAuthenticated } from "./routes/RedirectAuthenticated"
 import { ProtectedRoutes } from "./routes/ProtectedRoutes"
 import { Home } from "./Pages/Home"
 import { LoadingSpinner } from "./Components/LoadingSpinner"
+import ForgotPassword from "./Pages/ForgotPassword"
+import ResetPassword from "./Pages/ResetPassword"
 
 function App() {
 
-  const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuth();
+  const { isCheckingAuth, checkAuth } = useAuth();
 
   useEffect(() => {
     checkAuth()
@@ -49,6 +51,19 @@ function App() {
             <Login />
           </RedirectAuthenticated>
         } />
+
+        <Route path="/forgot-password" element={
+          <RedirectAuthenticated>
+            <ForgotPassword />
+          </RedirectAuthenticated>
+        } />
+
+        <Route path="/reset-password/:token" element={
+          <RedirectAuthenticated>
+            <ResetPassword />
+          </RedirectAuthenticated>
+        } />
+
       </Routes>
 
       <Toaster />
