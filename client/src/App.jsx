@@ -4,8 +4,22 @@ import Login from "./Pages/Login"
 import FloatingShape from "./Components/FloatingShape"
 import VerifyEmail from "./Pages/VerifyEmail"
 import { Toaster } from "react-hot-toast"
+import { useAuth } from "./store/auth"
+import { useEffect } from "react"
+import { RedirectAuthenticated } from "./routes/RedirectAuthenticated"
+import { ProtectedRoutes } from "./routes/ProtectedRoutes"
+import { Home } from "./Pages/Home"
 
 function App() {
+
+  const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuth();
+
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+
+  console.log(isAuthenticated);
+  console.log(user);
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-900 via-green-900 flex items-center justify-center relative overflow-hidden'>
@@ -15,12 +29,28 @@ function App() {
       <FloatingShape color='bg-lime-500' size='w-32 h-32' top='40%' left='-10%' delay={2} />
 
       <Routes>
-        <Route path="/" element={"Home"} />
-        <Route path="/signup" element={<Signup />} />
+
+        <Route path="/" element={
+          <ProtectedRoutes>
+            <Home />
+          </ProtectedRoutes>
+        } />
+
+        <Route path="/signup" element={
+          <RedirectAuthenticated>
+            <Signup />
+          </RedirectAuthenticated>
+        } />
+
         <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/login" element={<Login />} />
+
+        <Route path="/login" element={
+          <RedirectAuthenticated>
+            <Login />
+          </RedirectAuthenticated>
+        } />
       </Routes>
-      
+
       <Toaster />
 
     </div >
