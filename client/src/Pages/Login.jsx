@@ -3,6 +3,7 @@ import Input from "../Components/Input";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Lock, Mail, Loader } from "lucide-react";
+import { useAuth } from "../store/auth";
 
 const Login = () => {
     const [email, setEmail] = useState("");
